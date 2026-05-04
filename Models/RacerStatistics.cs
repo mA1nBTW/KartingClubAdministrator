@@ -2,22 +2,32 @@
 using System.Collections.Generic;
 using System.Text;
 
-//Клас для зберігання спортивної статистики гонщика.
-//Реалізований як частина композиції в класі Racer.
 namespace KartingClubApp.Models
 {
+    /// <summary>
+    /// Клас для зберігання спортивної статистики гонщика.
+    /// Реалізований як частина композиції в класі Racer.
+    /// </summary>
     public class RacerStatistics
     {
-        //Загальна кількість завершених заїздів.
+        /// <summary>
+        /// Загальна кількість завершених заїздів.
+        /// </summary>
         public int TotalRaces { get; set; }
 
-        //Кількість перемог (найшвидше коло у заїзді).
+        /// <summary>
+        /// Кількість перемог (найшвидше коло у заїзді).
+        /// </summary>
         public int TotalWins { get; set; }
 
-        //Найкращий час кола за всю історію (якщо є).
+        /// <summary>
+        /// Найкращий час кола за всю історію (якщо є).
+        /// </summary>
         public TimeSpan? BestLapTime { get; set; }
 
-        //Конструктор за замовчуванням. Ініціалізує початкову (нульову) статистику.
+        /// <summary>
+        /// Конструктор за замовчуванням. Ініціалізує початкову (нульову) статистику.
+        /// </summary>
         public RacerStatistics()
         {
             TotalRaces = 0;

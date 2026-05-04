@@ -4,8 +4,10 @@ using System.Text;
 
 namespace KartingClubApp.Models
 {
-    //Перелік доступних категорій гонщиків.
-    //Використовується для уникнення помилок при ручному введенні категорій.
+    /// <summary>
+    /// Перелік доступних категорій гонщиків.
+    /// Використовується для уникнення помилок при ручному введенні категорій.
+    /// </summary>
     public enum RaceCategory
     {
         Amateur,
@@ -13,37 +15,59 @@ namespace KartingClubApp.Models
         Professional
     }
 
-    //Головна сутність - Гонщик (клієнт картинг-клубу).
+    /// <summary>
+    /// Головна сутність - Гонщик (клієнт картинг-клубу).
+    /// </summary>
     public class Racer
     {
-        //Унікальний системний ідентифікатор гонщика.
+        /// <summary>
+        /// Унікальний системний ідентифікатор гонщика.
+        /// </summary>
         public Guid Id { get; set; }
 
-        //Ім'я гонщика.
-        public string FirstName { get; set; }
+        /// <summary>
+        /// Ім'я гонщика.
+        /// </summary>
+        public string? FirstName { get; set; }
 
-        //Прізвище гонщика.
-        public string LastName { get; set; }
+        /// <summary>
+        /// Прізвище гонщика.
+        /// </summary>
+        public string? LastName { get; set; }
 
-        //Дата народження. Використовується для перевірки віку (> 10 років).
+        /// <summary>
+        /// Дата народження. Використовується для перевірки віку (> 10 років).
+        /// </summary>
         public DateTime DateOfBirth { get; set; }
 
-        //Унікальний номер ліцензії в реальному світі.
-        public string LicenseNumber { get; set; }
+        /// <summary>
+        /// Унікальний номер ліцензії в реальному світі.
+        /// </summary>
+        public string? LicenseNumber { get; set; }
 
-        //Контактний телефон
-        public string PhoneNumber { get; set; }
+        /// <summary>
+        /// Контактний телефон
+        /// </summary>
+        public string? PhoneNumber { get; set; }
 
-        //Рівень підготовки гонщика.
+        /// <summary>
+        /// Рівень підготовки гонщика.
+        /// </summary>
         public RaceCategory Category { get; set; }
 
-        //Дата реєстрації гонщика в системі.
+        /// <summary>
+        /// Дата реєстрації гонщика в системі.
+        /// </summary>
         public DateTime RegistrationDate { get; set; }
 
-        // Статистика досягнень гонщика. Демонстрація принципу Композиції.
+        /// <summary>
+        /// Статистика досягнень гонщика. Демонстрація принципу Композиції.
+        /// </summary>
         public RacerStatistics Statistics { get; set; }
 
-        //Конструктор для ініціалізації нового гонщика.
+        /// <summary>
+        /// Конструктор для ініціалізації нового гонщика.
+        /// </summary>
         public Racer()
         {
             Id = Guid.NewGuid();
