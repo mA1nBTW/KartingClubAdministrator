@@ -64,6 +64,7 @@
             btnDeleteRacer.TabIndex = 2;
             btnDeleteRacer.Text = "Видалити гонщика";
             btnDeleteRacer.UseVisualStyleBackColor = true;
+            btnDeleteRacer.Click += btnDeleteRacer_Click;
             // 
             // btnAddRacer
             // 
@@ -74,6 +75,7 @@
             btnAddRacer.TabIndex = 1;
             btnAddRacer.Text = "Додати гонщика";
             btnAddRacer.UseVisualStyleBackColor = true;
+            btnAddRacer.Click += btnAddRacer_Click;
             // 
             // dgvRacers
             // 
@@ -111,6 +113,7 @@
             btnOpenSession.TabIndex = 2;
             btnOpenSession.Text = "Відкрити заїзд";
             btnOpenSession.UseVisualStyleBackColor = true;
+            btnOpenSession.Click += btnOpenSession_Click;
             // 
             // btnCreateSession
             // 
@@ -121,6 +124,7 @@
             btnCreateSession.TabIndex = 1;
             btnCreateSession.Text = "Створити заїзд";
             btnCreateSession.UseVisualStyleBackColor = true;
+            btnCreateSession.Click += btnCreateSession_Click;
             // 
             // dgvSessions
             // 
