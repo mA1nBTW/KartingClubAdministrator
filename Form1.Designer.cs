@@ -90,6 +90,7 @@
             dgvRacers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvRacers.Size = new Size(780, 260);
             dgvRacers.TabIndex = 0;
+            dgvRacers.KeyDown += dgvRacers_KeyDown;
             // 
             // groupBoxSessions
             // 

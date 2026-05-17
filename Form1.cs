@@ -36,6 +36,7 @@ namespace KartingClubApp
             dgvRacers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvRacers.MultiSelect = false;
             dgvRacers.AllowUserToAddRows = false;
+            dgvRacers.AllowUserToDeleteRows = false;
             dgvRacers.RowHeadersVisible = false;
 
             dgvRacers.Columns.Add(new DataGridViewTextBoxColumn
@@ -209,7 +210,11 @@ namespace KartingClubApp
         private void dgvRacers_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
+            {
                 DeleteSelectedRacer();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
 
         /// <summary>
