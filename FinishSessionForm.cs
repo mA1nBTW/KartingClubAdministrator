@@ -185,6 +185,68 @@ namespace KartingClubApp
         // Валідація введених даних
 
         /// <summary>
+        /// Парсить рядок часу кола у декількох форматах:
+        /// "58.34" або "58,34" — секунди,
+        /// "1:34.45" або "1.34.45" — хвилини та секунди.
+        /// </summary>
+        /// <param name="input">Введений рядок.</param>
+        /// <param name="result">Результат у вигляді TimeSpan.</param>
+        /// <returns>true якщо парсинг успішний.</returns>
+        private bool TryParseTime(string input, out TimeSpan result)
+        {
+            result = TimeSpan.Zero;
+            if (string.IsNullOrWhiteSpace(input)) return false;
+
+            // Нормалізуємо: замінюємо кому на крапку
+            input = input.Trim().Replace(',', '.');
+
+            // Формат "хв:сек.мс" → наприклад "1:34.45"
+            if (input.Contains(':'))
+            {
+                string[] parts = input.Split(':');
+                if (parts.Length != 2) return false;
+
+                if (!int.TryParse(parts[0], out int minutes)) return false;
+                if (!double.TryParse(parts[1],
+                        System.Globalization.NumberStyles.Any,
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        out double seconds)) return false;
+
+                if (minutes < 0 || seconds < 0 || seconds >= 60) return false;
+
+                result = TimeSpan.FromSeconds(minutes * 60 + seconds);
+                return true;
+            }
+
+            // Формат "хв.сек.мс" → наприклад "1.34.45"
+            // Відрізняємо від звичайних секунд за кількістю крапок
+            if (input.Count(c => c == '.') == 2)
+            {
+                string[] parts = input.Split('.');
+                if (!int.TryParse(parts[0], out int minutes)) return false;
+                if (!int.TryParse(parts[1], out int secs)) return false;
+                if (!int.TryParse(parts[2], out int ms)) return false;
+
+                if (minutes < 0 || secs < 0 || secs >= 60 || ms < 0) return false;
+
+                result = TimeSpan.FromSeconds(minutes * 60 + secs)
+                         + TimeSpan.FromMilliseconds(ms * 10);
+                return true;
+            }
+
+            // Формат "сек.мс" → наприклад "58.34" або "58,34"
+            if (!double.TryParse(input,
+                    System.Globalization.NumberStyles.Any,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out double totalSeconds)) return false;
+
+            if (totalSeconds <= 0) return false;
+
+            result = TimeSpan.FromSeconds(totalSeconds);
+            return true;
+        }
+
+        /// <summary>
         /// Перевіряє коректність введеного часу кола для кожного учасника.
         /// Повертає словник Guid → TimeSpan у разі успіху, або null — при помилці.
         /// </summary>
@@ -207,17 +269,17 @@ namespace KartingClubApp
                     return null;
                 }
 
-                if (!double.TryParse(cellValue,
-                        System.Globalization.NumberStyles.Any,
-                        System.Globalization.CultureInfo.InvariantCulture,
-                        out double seconds) || seconds <= 0)
+                if (!TryParseTime(cellValue, out TimeSpan lapTime))
                 {
-                    lblError.Text = "Час кола має бути додатнім числом (наприклад: 58.34).";
+                    lblError.Text = "Некоректний формат часу. Використовуйте:\n" +
+                                    "- секунди: 58.34 або 58,34\n" +
+                                    "- хвилини:секунди: 1:34.45\n" +
+                                    "- хвилини.секунди.мс: 1.34.45";
                     row.Cells[LapTimeColumnIndex].Selected = true;
                     return null;
                 }
 
-                results[(Guid)row.Tag] = TimeSpan.FromSeconds(seconds);
+                results[(Guid)row.Tag] = lapTime;
             }
 
             return results;

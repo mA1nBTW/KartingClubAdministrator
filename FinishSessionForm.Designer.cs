@@ -89,12 +89,12 @@
             pnlBottom.Dock = DockStyle.Bottom;
             pnlBottom.Location = new Point(0, 401);
             pnlBottom.Name = "pnlBottom";
-            pnlBottom.Size = new Size(544, 80);
+            pnlBottom.Size = new Size(544, 120);
             pnlBottom.TabIndex = 1;
             // 
             // btnClose
             // 
-            btnClose.Location = new Point(380, 30);
+            btnClose.Location = new Point(380, 70);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(150, 35);
             btnClose.TabIndex = 2;
@@ -104,7 +104,7 @@
             // 
             // btnFinish
             // 
-            btnFinish.Location = new Point(380, 30);
+            btnFinish.Location = new Point(380, 70);
             btnFinish.Name = "btnFinish";
             btnFinish.Size = new Size(150, 35);
             btnFinish.TabIndex = 1;
@@ -117,7 +117,7 @@
             lblError.ForeColor = Color.Red;
             lblError.Location = new Point(15, 6);
             lblError.Name = "lblError";
-            lblError.Size = new Size(510, 20);
+            lblError.Size = new Size(510, 110);
             lblError.TabIndex = 0;
             // 
             // dgvResults
@@ -135,7 +135,7 @@
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnClose;
-            ClientSize = new Size(544, 481);
+            ClientSize = new Size(544, 521);
             Controls.Add(dgvResults);
             Controls.Add(pnlBottom);
             Controls.Add(pnlInfo);
