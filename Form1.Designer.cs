@@ -176,9 +176,11 @@
             Controls.Add(groupBoxSessions);
             Controls.Add(groupBoxRacers);
             Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            KeyPreview = true;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Адміністратор картинг-клубу";
+            KeyDown += MainForm_KeyDown;
             groupBoxRacers.ResumeLayout(false);
             groupBoxRacers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvRacers).EndInit();
