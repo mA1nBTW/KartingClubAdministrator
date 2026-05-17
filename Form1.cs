@@ -287,13 +287,13 @@ namespace KartingClubApp
         /// </summary>
         private void OpenSelectedSession()
         {
-            //if (dgvSessions.CurrentRow == null) return;
+            if (dgvSessions.CurrentRow == null) return;
 
-            //Guid sessionId = (Guid)dgvSessions.CurrentRow.Tag;
+            Guid sessionId = (Guid)dgvSessions.CurrentRow.Tag;
 
-            //using FinishSessionForm form = new FinishSessionForm(_manager, sessionId);
-            //if (form.ShowDialog() == DialogResult.OK)
-            //    RefreshAll();
+            using FinishSessionForm form = new FinishSessionForm(_manager, sessionId);
+            if (form.ShowDialog() == DialogResult.OK)
+                RefreshAll();
         }
     }
 }

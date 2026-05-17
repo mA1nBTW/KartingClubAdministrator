@@ -140,6 +140,7 @@
             dgvSessions.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvSessions.Size = new Size(780, 290);
             dgvSessions.TabIndex = 0;
+            dgvSessions.KeyDown += dgvSessions_KeyDown;
             // 
             // MainForm
             // 
