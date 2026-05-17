@@ -88,6 +88,35 @@ namespace KartingClubApp.Services
         }
 
         /// <summary>
+        /// Оновлює дані існуючого гонщика у колекції.
+        /// Перевіряє унікальність нового номера ліцензії.
+        /// </summary>
+        /// <param name="updatedRacer">Об'єкт гонщика з оновленими даними.</param>
+        /// <returns>
+        /// <c>true</c> — якщо оновлення успішне;
+        /// <c>false</c> — якщо новий номер ліцензії вже належить іншому гонщику.
+        /// </returns>
+        public bool EditRacer(Racer updatedRacer)
+        {
+            bool licenseConflict = Racers.Any(r =>
+                r.LicenseNumber == updatedRacer.LicenseNumber &&
+                r.Id != updatedRacer.Id);
+
+            if (licenseConflict) return false;
+
+            Racer existing = Racers.FirstOrDefault(r => r.Id == updatedRacer.Id);
+            if (existing == null) return false;
+
+            existing.FirstName = updatedRacer.FirstName;
+            existing.LastName = updatedRacer.LastName;
+            existing.LicenseNumber = updatedRacer.LicenseNumber;
+            existing.Category = updatedRacer.Category;
+
+            SaveData();
+            return true;
+        }
+
+        /// <summary>
         /// Створює новий заїзд та додає його до колекції.
         /// </summary>
         /// <param name="session">Об'єкт заїзду для додавання.</param>

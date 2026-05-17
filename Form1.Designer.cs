@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             groupBoxRacers = new GroupBox();
+            btnEditRacer = new Button();
+            txtSearch = new TextBox();
             btnDeleteRacer = new Button();
             btnAddRacer = new Button();
             dgvRacers = new DataGridView();
@@ -45,15 +47,38 @@
             // groupBoxRacers
             // 
             groupBoxRacers.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBoxRacers.Controls.Add(btnEditRacer);
+            groupBoxRacers.Controls.Add(txtSearch);
             groupBoxRacers.Controls.Add(btnDeleteRacer);
             groupBoxRacers.Controls.Add(btnAddRacer);
             groupBoxRacers.Controls.Add(dgvRacers);
             groupBoxRacers.Location = new Point(12, 12);
             groupBoxRacers.Name = "groupBoxRacers";
-            groupBoxRacers.Size = new Size(960, 300);
+            groupBoxRacers.Size = new Size(960, 400);
             groupBoxRacers.TabIndex = 0;
             groupBoxRacers.TabStop = false;
             groupBoxRacers.Text = "Гонщики";
+            // 
+            // btnEditRacer
+            // 
+            btnEditRacer.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnEditRacer.Location = new Point(800, 125);
+            btnEditRacer.Name = "btnEditRacer";
+            btnEditRacer.Size = new Size(150, 40);
+            btnEditRacer.TabIndex = 4;
+            btnEditRacer.Text = "Редагувати гонщика";
+            btnEditRacer.UseVisualStyleBackColor = true;
+            btnEditRacer.Click += btnEditRacer_Click;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            txtSearch.Location = new Point(10, 34);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Пошук за прізвищем або ліцензією...";
+            txtSearch.Size = new Size(780, 25);
+            txtSearch.TabIndex = 3;
+            txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // btnDeleteRacer
             // 
@@ -83,12 +108,12 @@
             dgvRacers.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvRacers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvRacers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvRacers.Location = new Point(10, 25);
+            dgvRacers.Location = new Point(10, 75);
             dgvRacers.Name = "dgvRacers";
             dgvRacers.ReadOnly = true;
             dgvRacers.RowHeadersVisible = false;
             dgvRacers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvRacers.Size = new Size(780, 260);
+            dgvRacers.Size = new Size(780, 310);
             dgvRacers.TabIndex = 0;
             dgvRacers.KeyDown += dgvRacers_KeyDown;
             // 
@@ -98,7 +123,7 @@
             groupBoxSessions.Controls.Add(btnOpenSession);
             groupBoxSessions.Controls.Add(btnCreateSession);
             groupBoxSessions.Controls.Add(dgvSessions);
-            groupBoxSessions.Location = new Point(12, 320);
+            groupBoxSessions.Location = new Point(12, 410);
             groupBoxSessions.Name = "groupBoxSessions";
             groupBoxSessions.Size = new Size(960, 330);
             groupBoxSessions.TabIndex = 1;
@@ -140,6 +165,7 @@
             dgvSessions.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvSessions.Size = new Size(780, 290);
             dgvSessions.TabIndex = 0;
+            dgvSessions.CellDoubleClick += dgvSessions_CellDoubleClick;
             dgvSessions.KeyDown += dgvSessions_KeyDown;
             // 
             // MainForm
@@ -154,6 +180,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Адміністратор картинг-клубу";
             groupBoxRacers.ResumeLayout(false);
+            groupBoxRacers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvRacers).EndInit();
             groupBoxSessions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvSessions).EndInit();
@@ -170,5 +197,7 @@
         private Button btnOpenSession;
         private Button btnCreateSession;
         private DataGridView dgvSessions;
+        private TextBox txtSearch;
+        private Button btnEditRacer;
     }
 }

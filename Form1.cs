@@ -283,6 +283,29 @@ namespace KartingClubApp
         }
 
         /// <summary>
+        /// Відкриває форму редагування для обраного гонщика.
+        /// </summary>
+        private void btnEditRacer_Click(object sender, EventArgs e)
+        {
+            if (dgvRacers.CurrentRow == null)
+            {
+                MessageBox.Show(
+                    "Будь ласка, оберіть гонщика у таблиці для редагування.",
+                    "Гонщика не обрано",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            Guid racerId = (Guid)dgvRacers.CurrentRow.Tag;
+            Racer racer = _manager.Racers.First(r => r.Id == racerId);
+
+            using EditRacerForm form = new EditRacerForm(_manager, racer);
+            if (form.ShowDialog() == DialogResult.OK)
+                RefreshAll();
+        }
+
+        /// <summary>
         /// Відкриває вікно фіксації результатів для обраного в таблиці заїзду.
         /// </summary>
         private void OpenSelectedSession()
@@ -294,6 +317,50 @@ namespace KartingClubApp
             using FinishSessionForm form = new FinishSessionForm(_manager, sessionId);
             if (form.ShowDialog() == DialogResult.OK)
                 RefreshAll();
+        }
+
+        /// <summary>
+        /// Фільтрує таблицю гонщиків за прізвищем або номером ліцензії
+        /// в режимі реального часу при введенні тексту.
+        /// </summary>
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string query = txtSearch.Text.Trim().ToLower();
+
+            dgvRacers.Rows.Clear();
+
+            var filtered = string.IsNullOrEmpty(query)
+                ? _manager.Racers
+                : _manager.Racers.Where(r =>
+                    (r.LastName?.ToLower().Contains(query) ?? false) ||
+                    (r.LicenseNumber?.ToLower().Contains(query) ?? false));
+
+            foreach (Racer racer in filtered)
+            {
+                string categoryDisplay = racer.Category switch
+                {
+                    RaceCategory.Amateur => "Аматор",
+                    RaceCategory.Experienced => "Досвідчений",
+                    RaceCategory.Professional => "Професіонал",
+                    _ => racer.Category.ToString()
+                };
+
+                string bestLap = racer.Statistics.BestLapTime.HasValue
+                    ? racer.Statistics.BestLapTime.Value.TotalSeconds.ToString("F2")
+                    : "—";
+
+                int rowIndex = dgvRacers.Rows.Add(
+                    racer.FirstName,
+                    racer.LastName,
+                    racer.LicenseNumber,
+                    categoryDisplay,
+                    racer.Statistics.TotalRaces,
+                    racer.Statistics.TotalWins,
+                    bestLap
+                );
+
+                dgvRacers.Rows[rowIndex].Tag = racer.Id;
+            }
         }
     }
 }
