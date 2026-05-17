@@ -188,9 +188,9 @@ namespace KartingClubApp
                 return;
             }
 
-            //using CreateSessionForm form = new CreateSessionForm(_manager);
-            //if (form.ShowDialog() == DialogResult.OK)
-            //    RefreshAll();
+            using CreateSessionForm form = new CreateSessionForm(_manager);
+            if (form.ShowDialog() == DialogResult.OK)
+                RefreshAll();
         }
 
         /// <summary>
