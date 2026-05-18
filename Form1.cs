@@ -202,6 +202,14 @@ namespace KartingClubApp
             OpenSelectedSession();
         }
 
+        /// <summary>
+        /// Видаляє обраний заїзд після підтвердження користувача.
+        /// </summary>
+        private void btnDeleteSession_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedSession();
+        }
+
         // Обробники клавіатури
 
         /// <summary>
@@ -229,6 +237,12 @@ namespace KartingClubApp
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
+            else if (e.KeyCode == Keys.Delete)
+            {
+                DeleteSelectedSession();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
 
         /// <summary>
@@ -244,7 +258,7 @@ namespace KartingClubApp
 
         /// <summary>
         /// Виконує логіку видалення обраного гонщика з таблиці:
-        /// перевіряє зв'язки із заїздами та запитує підтвердження.
+        /// перевіряє зв'язки із зїздами та запитує підтвердження.
         /// </summary>
         private void DeleteSelectedRacer()
         {
@@ -317,6 +331,43 @@ namespace KartingClubApp
             using FinishSessionForm form = new FinishSessionForm(_manager, sessionId);
             if (form.ShowDialog() == DialogResult.OK)
                 RefreshAll();
+        }
+
+        /// <summary>
+        /// Виконує логіку видалення обраного заїзду:
+        /// запитує підтвердження та викликає менеджер.
+        /// </summary>
+        private void DeleteSelectedSession()
+        {
+            if (dgvSessions.CurrentRow == null)
+            {
+                MessageBox.Show(
+                    "Будь ласка, оберіть заїзд у таблиці для видалення.",
+                    "Заїзд не обрано",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            Guid sessionId = (Guid)dgvSessions.CurrentRow.Tag;
+            RaceSession session = _manager.Sessions.First(s => s.Id == sessionId);
+
+            string statusText = session.Status == SessionStatus.Scheduled
+                ? "запланований"
+                : "завершений";
+
+            DialogResult confirm = MessageBox.Show(
+                $"Ви дійсно бажаєте видалити {statusText} заїзд\n" +
+                $"«{session.TrackName}» від {session.SessionDate:dd.MM.yyyy HH:mm}?\n\n" +
+                "Цю дію неможливо скасувати.",
+                "Підтвердження видалення",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.OK) return;
+
+            _manager.DeleteSession(sessionId);
+            RefreshAll();
         }
 
         /// <summary>

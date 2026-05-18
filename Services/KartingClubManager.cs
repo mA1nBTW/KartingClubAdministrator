@@ -32,7 +32,7 @@ namespace KartingClubApp.Services
         public List<RaceSession> Sessions { get; private set; }
 
         /// <summary>
-        /// Конструктор. Ініціалізує порожні колекції та завантажує
+        /// Конструктор. Ініціалізує порожі колекції та завантажує
         /// збережені дані з файлів, якщо вони існують.
         /// </summary>
         public KartingClubManager()
@@ -48,7 +48,7 @@ namespace KartingClubApp.Services
         /// <param name="racer">Об'єкт гонщика для додавання.</param>
         /// <returns>
         /// <c>true</c> — якщо гонщика успішно додано;
-        /// <c>false</c> — якщо номер ліцензії вже існує в системі.
+        /// <c>fasle</c> — якщо номер ліцензії вже існує в системі.
         /// </returns>
         public bool AddRacer(Racer racer)
         {
@@ -176,6 +176,24 @@ namespace KartingClubApp.Services
             }
 
             session.Status = SessionStatus.Completed;
+            SaveData();
+            return true;
+        }
+
+        /// <summary>
+        /// Видаляє заїзд з колекції за його ідентифікатором.
+        /// </summary>
+        /// <param name="sessionId">Ідентифікатор заїзду для видалення.</param>
+        /// <returns>
+        /// <c>true</c> — якщо заїзд успішно видалено;
+        /// <c>false</c> — якщо заїзд із вказаним ідентифікатором не знайдено.
+        /// </returns>
+        public bool DeleteSession(Guid sessionId)
+        {
+            RaceSession session = Sessions.FirstOrDefault(s => s.Id == sessionId);
+            if (session == null) return false;
+
+            Sessions.Remove(session);
             SaveData();
             return true;
         }

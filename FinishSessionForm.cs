@@ -200,7 +200,7 @@ namespace KartingClubApp
             // Нормалізуємо: замінюємо кому на крапку
             input = input.Trim().Replace(',', '.');
 
-            // Формат "хв:сек.мс" → наприклад "1:34.45"
+            // Формат "хв:сек.мс" наприклад "1:34.45"
             if (input.Contains(':'))
             {
                 string[] parts = input.Split(':');
@@ -218,7 +218,7 @@ namespace KartingClubApp
                 return true;
             }
 
-            // Формат "хв.сек.мс" → наприклад "1.34.45"
+            // Формат "хв.сек.мс" наприклад "1.34.45"
             // Відрізняємо від звичайних секунд за кількістю крапок
             if (input.Count(c => c == '.') == 2)
             {
@@ -234,7 +234,7 @@ namespace KartingClubApp
                 return true;
             }
 
-            // Формат "сек.мс" → наприклад "58.34" або "58,34"
+            // Формат "сек.мс" наприклад "58.34" або "58,34"
             if (!double.TryParse(input,
                     System.Globalization.NumberStyles.Any,
                     System.Globalization.CultureInfo.InvariantCulture,
@@ -248,7 +248,7 @@ namespace KartingClubApp
 
         /// <summary>
         /// Перевіряє коректність введеного часу кола для кожного учасника.
-        /// Повертає словник Guid → TimeSpan у разі успіху, або null — при помилці.
+        /// Повертає словник Guid - TimeSpan у разі успіху, або null — при помилці.
         /// </summary>
         private Dictionary<Guid, TimeSpan>? CollectAndValidateResults()
         {

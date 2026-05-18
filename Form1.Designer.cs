@@ -35,6 +35,7 @@
             btnAddRacer = new Button();
             dgvRacers = new DataGridView();
             groupBoxSessions = new GroupBox();
+            btnDeleteSession = new Button();
             btnOpenSession = new Button();
             btnCreateSession = new Button();
             dgvSessions = new DataGridView();
@@ -120,6 +121,7 @@
             // groupBoxSessions
             // 
             groupBoxSessions.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBoxSessions.Controls.Add(btnDeleteSession);
             groupBoxSessions.Controls.Add(btnOpenSession);
             groupBoxSessions.Controls.Add(btnCreateSession);
             groupBoxSessions.Controls.Add(dgvSessions);
@@ -129,6 +131,17 @@
             groupBoxSessions.TabIndex = 1;
             groupBoxSessions.TabStop = false;
             groupBoxSessions.Text = "Заїзди";
+            // 
+            // btnDeleteSession
+            // 
+            btnDeleteSession.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnDeleteSession.Location = new Point(800, 125);
+            btnDeleteSession.Name = "btnDeleteSession";
+            btnDeleteSession.Size = new Size(150, 40);
+            btnDeleteSession.TabIndex = 3;
+            btnDeleteSession.Text = "Видалити заїзд";
+            btnDeleteSession.UseVisualStyleBackColor = true;
+            btnDeleteSession.Click += btnDeleteSession_Click;
             // 
             // btnOpenSession
             // 
@@ -201,5 +214,6 @@
         private DataGridView dgvSessions;
         private TextBox txtSearch;
         private Button btnEditRacer;
+        private Button btnDeleteSession;
     }
 }
